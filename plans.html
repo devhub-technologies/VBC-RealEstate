@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Layout Plan Viewer - VBC Real Estate</title>
+<meta name="description" content="VBC Real Estate, Individual Houses and Flats, Interior Works, Modular Kitchen and Wooden Cupboards in Morai, Avadi, Chennai.">
+<meta name="keywords" content="VBC Real Estate, Morai Avadi, Avadi Chennai, layout plan viewer, individual house, flat, interior works, modular kitchen, wooden cupboards, Vellanur Village Plans, Morai Village Plans">
+<meta name="author" content="S.V. Vijaya Babu">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="assets/img/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="assets/css/bootstrap-icons.css" rel="stylesheet">
+<link href="assets/css/animate.min.css" rel="stylesheet">
+<link href="assets/css/owl.carousel.min.css" rel="stylesheet">
+<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+<link href="assets/css/toastr.css" rel="stylesheet">
+<link href="assets/css/style.css" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+
+<style>
+.py-5{padding-top:0!important;padding-bottom:1rem!important;width:90%}
+.laytxt{text-align:center;margin:auto;color:#fff;font-weight:600;font-size:19px;padding-top:10px}
+@media only screen and (max-width:767px){.topview{margin-top:0!important}}
+.brand-text{font-family:'Inter',sans-serif;font-weight:800;font-size:28px;color:#00B98E;letter-spacing:.5px}
+.brand-text span{color:#c0392b}
+.property-item{box-shadow:0 0 30px rgba(0,0,0,.08);border:1px solid gainsboro}
+.pagination{display:inline-block;padding-left:0;margin:20px 0;border-radius:4px}
+.pagination>li{display:inline}
+.pagination>li>a{position:relative;text-align:center;float:left;padding:6px 12px;width:40px;margin-left:-1px;line-height:1.42857143;color:#00B98E;text-decoration:none;background:#fff;border:1px solid #ddd}
+.pagination>li>a:hover{color:#23527c;background:#ECFFF5}
+.pagination>li.active>a{color:#fff;background:#00B98E;border-color:#00B98E}
+.form-control:disabled,.form-control:read-only{background:#fff;opacity:1;color:#666565}
+
+/* --- Layout plan cards : all equal size --- */
+.plan-card{cursor:pointer;transition:box-shadow .2s ease,transform .2s ease;height:100%}
+.plan-card:hover{box-shadow:0 0 30px rgba(0,0,0,.18);transform:translateY(-3px)}
+.plan-thumb-wrap{height:200px;overflow:hidden;background:#f3f3f3;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.plan-thumb-wrap img{width:100%;height:100%;object-fit:cover}
+.plan-village-badge{position:absolute;top:10px;left:10px;background:#00B98E;color:#fff;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;z-index:2}
+.plan-body{display:flex;flex-direction:column;flex-grow:1}
+.plan-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:48px}
+.plan-info{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:40px;font-size:13px}
+.plan-survey{font-size:13px;min-height:20px}
+.alp_disabled{opacity:.35;pointer-events:none}
+#noResult{display:none}
+
+/* --- View-plan modal: zoom / pan --- */
+.vp-stage{position:relative;overflow:auto;background:#111;height:72vh;touch-action:pan-x pan-y pinch-zoom;cursor:grab}
+.vp-stage.grabbing{cursor:grabbing}
+.vp-stage img{display:block;margin:auto;max-width:100%;height:auto;transition:transform .08s linear;transform-origin:center center;user-select:none;-webkit-user-drag:none}
+.vp-zoom-controls{position:absolute;right:14px;bottom:14px;z-index:5;display:flex;flex-direction:column;gap:6px}
+.vp-zoom-controls button{width:40px;height:40px;border-radius:50%;border:none;background:rgba(255,255,255,.92);box-shadow:0 2px 8px rgba(0,0,0,.3);font-size:18px;font-weight:700;color:#333}
+.vp-zoom-controls button:active{background:#e2e2e2}
+.vp-hint{position:absolute;left:14px;bottom:14px;z-index:5;color:#fff;background:rgba(0,0,0,.45);padding:4px 10px;border-radius:14px;font-size:11px}
+</style>
+</head>
+<body>
+<div class="container-xxl bg-white p-0">
+<div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center"><div class="spinner-border text-primary" style="width:3rem;height:3rem;" role="status"><span class="sr-only">Loading...</span></div></div>
+
+<!-- Navbar -->
+<div style="margin-top:34px;" class="container-fluid nav-bar bg-transparent topview">
+<nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4" style="border:1px solid #b3dbd2;padding:5px 20px!important;">
+<a href="index.html" class="navbar-brand d-flex align-items-center">
+    <img src="assets/img/logo.png" alt="VBC Real Estate" style="height:80px; width:auto; display:block;">
+</a>
+<button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"><span class="navbar-toggler-icon"></span></button>
+<div class="collapse navbar-collapse" id="navbarCollapse">
+<div class="navbar-nav ms-auto">
+<a href="tel:+919444292247" class="nav-item nav-link" style="font-weight:600;color:#006699;font-size:large;margin-top:-2px;"><i class="fa fa-phone-alt me-3"></i>+91 94442 92247</a>
+<a href="index.html" class="nav-item nav-link">Home</a>
+<a href="about.html" class="nav-item nav-link">About Us</a>
+<a href="plans.html" class="nav-item nav-link active">Our Services</a>
+<a href="contact.html" class="nav-item nav-link">Contact us</a>
+</div></div></nav></div>
+
+<!-- Header -->
+<div class="container-fluid header bg-white p-0"><div class="row g-0 align-items-center flex-column-reverse flex-md-row">
+<div class="col-md-6 p-5 mt-lg-5">
+<h1 class="display-5 animated fadeIn mb-4">Find Your <span class="text-primary">Dream Home</span> in Morai, Avadi, Chennai.</h1>
+<p class="mb-4">Individual houses and flats, with complete interior works to make them ready to move in.</p>
+<a href="contact.html" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Contact us</a></div>
+<div class="col-md-6 animated fadeIn"><div class="owl-carousel header-carousel">
+<div class="owl-carousel-item"><img class="img-fluid" src="assets/img/b-1.jpg" alt="Banner 1"></div>
+<div class="owl-carousel-item"><img class="img-fluid" src="assets/img/b-04.jpg" alt="Banner 2"></div>
+<div class="owl-carousel-item"><img class="img-fluid" src="assets/img/b-3.avif" alt="Banner 3"></div>
+</div></div></div></div>
+
+<!-- Search -->
+<div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding:25px;margin-bottom:0rem!important;"><div class="container"><div class="row g-2" style="justify-content:center;">
+<div class="col-md-7"><div class="row g-2">
+<div class="col-md-4"><select class="form-select border-0 py-3" id="l_village"><option value="0">Select Village</option><option value="1">Vellanur Village</option><option value="2">Morai Village</option></select></div>
+<div class="col-md-8"><input type="text" class="form-control border-0 py-3" placeholder="Search by Layout Name or Survey No" id="search_q"></div>
+</div></div>
+<div class="col-md-1"><button class="btn btn-dark border-0 w-100 py-3" id="searchBtn" type="button">Search</button></div>
+</div></div></div>
+<div style="padding-top:15px;">&nbsp;</div>
+
+<!-- A-Z filter -->
+<div style="text-align:center" id="pdiv"><ul class="pagination" id="alpha"></ul></div>
+
+<!-- result count -->
+<div class="container text-center text-muted mb-2" id="resultCount" style="font-size:14px;"></div>
+
+<!-- Plan cards -->
+<div class="container-xxl py-5">
+  <div class="container" id="searchDIV">
+    <div class="row g-4 align-items-stretch" id="planList"></div>
+    <div id="noResult" class="text-center">
+      <div class="property-item rounded p-4">
+        <p class="mb-0">No layout plans found. Please call <a href="tel:+919444292247">94442 92247</a> or <a href="tel:+918122883543">81228 83543</a>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View Plan Modal -->
+<div id="viewplan" class="modal fade" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="width:96%;max-width:1150px;">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color:#009472;">
+        <h5 class="modal-title text-white" id="viewPlanTitle">Layout Plan</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter:invert(1)"></button>
+      </div>
+      <div class="modal-body p-0">
+        <div class="vp-stage" id="vpStage">
+          <img id="viewPlanImg" src="" alt="Layout plan">
+          <div class="vp-zoom-controls">
+            <button type="button" id="vpZoomIn" title="Zoom in">+</button>
+            <button type="button" id="vpZoomReset" title="Reset" style="font-size:13px;">1:1</button>
+            <button type="button" id="vpZoomOut" title="Zoom out">&minus;</button>
+          </div>
+          <div class="vp-hint">Scroll / drag to pan &middot; pinch or buttons to zoom</div>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-between flex-wrap">
+        <span id="viewPlanInfo" class="text-muted small"></span>
+        <div class="d-flex gap-2 flex-wrap">
+          <a id="viewPlanEnquire" class="btn btn-primary btn-sm px-3" target="_blank" rel="noopener"><i class="bi bi-whatsapp me-1"></i>Enquire</a>
+          <button type="button" id="viewPlanShare" class="btn btn-outline-secondary btn-sm px-3"><i class="bi bi-share me-1"></i>Share Details</button>
+          <button type="button" class="btn btn-warning btn-sm" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s" style="padding-top:0.1rem!important;">
+<div class="container py-5" style="padding-top:1rem!important;padding-bottom:1rem!important;"><div class="row g-5"><div class="col-lg-12 col-md-12">
+<h5 class="text-white mb-4" align="center">Get In Touch</h5>
+<p class="text-center text-white mb-4">Proprietor: S.V. Vijaya Babu</p>
+<div class="row g-5">
+<div class="col-md-6" align="center"><i class="fa fa-map-marker-alt me-3"></i>No. 6761/174, Velmurugan Nagar Main Road, <br> Morai, Avadi, Chennai - 600 055</div>
+<div class="col-md-6" align="center"><i class="fa fa-phone-alt me-3"></i><a class="text-white-50" href="tel:+919444292247">94442 92247</a> <br> <i class="fa fa-phone-alt me-3"></i><a class="text-white-50" href="tel:+918122883543">81228 83543</a></div>
+</div></div></div></div>
+<div class="container"><div class="copyright"><div class="row">
+<div class="col-md-6 text-center text-md-start mb-3 mb-md-0">Copyright &copy; 2026 - <a href="index.html">VBC Real Estate</a></div>
+<div class="col-md-6 text-center text-md-end">Powered By : <a class="devhub" href="https://devhubtechnologies.co.in/">DevHub Technologies</a></div>
+</div></div></div></div>
+
+<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+</div>
+
+<script src="assets/js/jquery-3.4.1.min.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/wow.min.js"></script>
+<script src="assets/js/easing.min.js"></script>
+<script src="assets/js/waypoints.min.js"></script>
+<script src="assets/js/owl.carousel.min.js"></script>
+<script src="assets/js/toastr.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/site.js"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"RealEstateAgent","name":"VBC Real Estate","telephone":["+919444292247","+918122883543"],
+"address":{"@type":"PostalAddress","streetAddress":"No. 6761/174, Velmurugan Nagar Main Road, Morai, Avadi","addressLocality":"Chennai","postalCode":"600055","addressCountry":"IN"}}
+</script>
+</body>
+</html>
