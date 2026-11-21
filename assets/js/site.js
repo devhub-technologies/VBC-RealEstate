@@ -98,7 +98,7 @@
     { village:"2", name:"Vijayashanthi Nagar", surveyNo:"341A (Patta No.188)", info:"V.No.5 Morai Pulikuthi Village, Ambattur Taluk, Thiruvallur Dist.", image:"assets/img/plans/layout-83.jpg" },
     { village:"2", name:"Poorni Nagar", surveyNo:"-", info:"Morai Village, Villivakkam, Saidapet Taluk.", image:"assets/img/plans/layout-84.jpg" },
     { village:"2", name:"Sri Sakthi Nagar", surveyNo:"26/18,9 & 29/7,8,8", info:"Morai Village, Villivakkam, Saidapet Taluk, Chengalpattu Dist.", image:"assets/img/plans/layout-85.jpg" },
-    { village:"2", name:"Santhosh Garden", surveyNo:"108/4B, 108/5", info:"Plan showing the layout of house sites in Survey Nos 108/4B, 108/5 at Morai Village, Ambattur Taluk, Thiruvallur District.", image:"assets/img/plans/santhosh-garden.jpg" }
+    { village:"2", name:"Santhosh Garden", surveyNo:"108/4B, 108/5", info:"Plan showing the layout of house sites in Survey Nos 108/4B, 108/5 at Morai Village, Ambattur Taluk, Thiruvallur District.", image:"assets/img/plans/santhosh-garden.jpeg" }
   ];
   var VILLAGE_NAME = { "0": "", "1": "Vellanur Village", "2": "Morai Village" };
   var WA = "919444292247";          // used by the contact page / header search
